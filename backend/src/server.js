@@ -1,6 +1,17 @@
-const express = require("express");
+const express = require('express');
+const mongoose = require('mongoose');
+
+const routes = require('./routes');
 
 const app = express();
+
+mongoose.connect(
+  'mongodb+srv://omnistack:omnistack@technode-c2x87.mongodb.net/omnistack?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+);
 
 // GET, POST, PUT, DELETE
 
@@ -9,9 +20,6 @@ const app = express();
 // req.body = acessar corpo da requisição. (criação e edição de registros)
 
 app.use(express.json());
-
-app.post("/users", (req, res) => {
-  return res.json(req.body);
-});
+app.use(routes);
 
 app.listen(3333);
