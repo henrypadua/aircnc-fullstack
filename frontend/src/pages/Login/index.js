@@ -15,6 +15,7 @@ export default function Login({ history }) {
 
     localStorage.setItem('user', _id);
 
+    // history é responsável por redirecionar o usuário
     history.push('/dashboard');
   }
 
