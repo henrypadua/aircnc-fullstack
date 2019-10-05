@@ -1,15 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 
-// import { Container } from './styles';
+import './styles.css';
 
 export default function Dashboard() {
+  const [spots, Setspot] = useState([]);
+
   useEffect(() => {
     async function loadSpots() {
       const user_id = localStorage.getItem('user');
       const response = await api.get('/dashboard', {
         headers: { user_id }
       });
+
+      Setspot(response.data);
     }
+
+    loadSpots();
   }, []);
+
+  return (
+    <>
+      <ul className="spot-list">
+        {spots.map(spot => (
+          <li key={spot._id}>
+            <header style={{ backgroundImage: `url(${spot.thumbnail_url})` }} />
+            <strong>{spot.company}</strong>
+            <span>{spot.price}sss</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
